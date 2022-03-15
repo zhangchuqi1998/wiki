@@ -5,11 +5,10 @@ import com.aaron.wiki.domain.EbookExample;
 import com.aaron.wiki.mapper.EbookMapper;
 import com.aaron.wiki.req.EbookReq;
 import com.aaron.wiki.resp.EbookResp;
-import org.springframework.beans.BeanUtils;
+import com.aaron.wiki.utils.CopyUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,12 +22,9 @@ public class EbookService {
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         criteria.andNameLike("%"+ req.getName() + "%");
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
-        List<EbookResp> respList = new ArrayList<>();
-        for (Ebook ebook : ebookList) {
-            EbookResp ebookResp = new EbookResp();
-            BeanUtils.copyProperties(ebook, ebookResp);
-            respList.add(ebookResp);
-        }
-        return respList;
+
+        List<EbookResp> list = CopyUtil.copyList(ebookList, EbookResp.class);
+
+        return list;
     }
 }
