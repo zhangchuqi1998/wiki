@@ -4,11 +4,10 @@
         <a-menu
                 theme="dark"
                 mode="horizontal"
-                v-model:selectedKeys="selectedKeys1"
                 :style="{ lineHeight: '64px' }"
         >
             <a-menu-item key="1">
-                nav 01
+                nav 1111
             </a-menu-item>
             <a-menu-item key="2">
                 nav 2
@@ -24,6 +23,6 @@
     import { defineComponent } from 'vue';
 
     export default defineComponent({
-        name: 'the-header',
+        name: 'the-header'
     });
 </script>

@@ -3,13 +3,11 @@
         <a-layout-sider width="200" style="background: #fff">
             <a-menu
                     mode="inline"
-                    v-model:selectedKeys="selectedKeys2"
-                    v-model:openKeys="openKeys"
                     :style="{ height: '100%', borderRight: 0 }"
             >
                 <a-sub-menu key="sub1">
                     <template #title>
-                        <span><user-outlined />subnav 1111</span>
+                        <span><user-outlined />subnav 11111</span>
                     </template>
                     <a-menu-item key="1">option1</a-menu-item>
                     <a-menu-item key="2">option2</a-menu-item>
@@ -41,17 +39,20 @@
         >
             Content
         </a-layout-content>
-    </a-layout>>
+    </a-layout>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+    import { defineComponent } from 'vue';
+    import axios from 'axios';
 
-export default defineComponent({
-  name: 'Home',
-  components: {
-    HelloWorld,
-  },
-});
+    export default defineComponent({
+        name: 'Home',
+        setup() {
+            console.log("setup");
+            axios.get("http://127.0.0.1:8880/ebook/list?name=Spring").then((response) => {
+                console.log(response);
+            })
+        }
+    });
 </script>
