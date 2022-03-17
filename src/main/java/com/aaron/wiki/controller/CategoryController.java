@@ -2,14 +2,15 @@ package com.aaron.wiki.controller;
 
 import com.aaron.wiki.req.CategoryQueryReq;
 import com.aaron.wiki.req.CategorySaveReq;
-import com.aaron.wiki.resp.CommonResp;
 import com.aaron.wiki.resp.CategoryQueryResp;
+import com.aaron.wiki.resp.CommonResp;
 import com.aaron.wiki.resp.PageResp;
 import com.aaron.wiki.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/category")
@@ -22,6 +23,14 @@ public class CategoryController {
     public CommonResp list(@Valid CategoryQueryReq req) {
         CommonResp<PageResp<CategoryQueryResp>> resp = new CommonResp<>();
         PageResp<CategoryQueryResp> list = categoryService.list(req);
+        resp.setContent(list);
+        return resp;
+    }
+
+    @GetMapping("/all")
+    public CommonResp all() {
+        CommonResp<List<CategoryQueryResp>> resp = new CommonResp<>();
+        List<CategoryQueryResp> list = categoryService.all();
         resp.setContent(list);
         return resp;
     }
