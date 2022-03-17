@@ -1,6 +1,6 @@
-package com.aaron.wiki.resp;
+package com.aaron.wiki.req;
 
-public class EbookResp {
+public class EbookSaveReq {
     private Long id;
 
     private String name;
