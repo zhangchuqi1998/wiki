@@ -8,6 +8,7 @@ import com.aaron.wiki.req.EbookSaveReq;
 import com.aaron.wiki.resp.EbookQueryResp;
 import com.aaron.wiki.resp.PageResp;
 import com.aaron.wiki.utils.CopyUtil;
+import com.aaron.wiki.utils.SnowFlake;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -26,6 +27,8 @@ public class EbookService {
 
     @Resource
     private EbookMapper ebookMapper;
+    @Resource
+    private SnowFlake snowFlake;
 
     public PageResp<EbookQueryResp> list(EbookQueryReq req) {
         EbookExample ebookExample = new EbookExample();
@@ -66,10 +69,12 @@ public class EbookService {
     public void save(EbookSaveReq req) {
         Ebook ebook = CopyUtil.copy(req, Ebook.class);
         if (ObjectUtils.isEmpty(req.getId())) {
-            // 新增
+            ebook.setId(snowFlake.nextId());
+            ebook.setDocCount(0);
+            ebook.setViewCount(0);
+            ebook.setVoteCount(0);
             ebookMapper.insert(ebook);
         } else {
-            // 更新
             ebookMapper.updateByPrimaryKey(ebook);
         }
     }
