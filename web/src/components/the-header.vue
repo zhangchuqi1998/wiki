@@ -14,6 +14,10 @@
                 <router-link to="/admin/ebook">Wiki management</router-link>
 
             </a-menu-item>
+            <a-menu-item key="/admin/category">
+                <router-link to="/admin/category">category management</router-link>
+
+            </a-menu-item>
             <a-menu-item key="/about">
                 <router-link to="/about">About Me</router-link>
 
