@@ -62,6 +62,7 @@
 <script lang="ts">
     import { defineComponent, onMounted, ref, reactive, toRef } from 'vue';
     import axios from 'axios';
+    import {message} from "ant-design-vue";
 
     // const listData: any = [];
     // for (let i = 0; i < 23; i++) {
@@ -90,7 +91,12 @@
                     }
                 }).then((response) => {
                     const data = response.data;
-                    ebooks.value = data.content.list;
+                    if (data.success) {
+                        ebooks.value = data.content.list;
+                    } else {
+                        message.error(data.message)
+                    }
+
                     // ebooks1.books = data.content;
                 });
             });
