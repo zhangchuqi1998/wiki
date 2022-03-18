@@ -27,6 +27,7 @@ public class EbookService {
 
     @Resource
     private EbookMapper ebookMapper;
+
     @Resource
     private SnowFlake snowFlake;
 
@@ -35,6 +36,9 @@ public class EbookService {
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         if (!ObjectUtils.isEmpty(req.getName())) {
             criteria.andNameLike("%" + req.getName() + "%");
+        }
+        if (!ObjectUtils.isEmpty(req.getCategoryId2())) {
+            criteria.andCategory2IdEqualTo(req.getCategoryId2());
         }
         PageHelper.startPage(req.getPage(), req.getSize());
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
@@ -69,17 +73,16 @@ public class EbookService {
     public void save(EbookSaveReq req) {
         Ebook ebook = CopyUtil.copy(req, Ebook.class);
         if (ObjectUtils.isEmpty(req.getId())) {
+            // 新增
             ebook.setId(snowFlake.nextId());
-            ebook.setDocCount(0);
-            ebook.setViewCount(0);
-            ebook.setVoteCount(0);
             ebookMapper.insert(ebook);
         } else {
+            // 更新
             ebookMapper.updateByPrimaryKey(ebook);
         }
     }
 
-    public void delete(long id) {
+    public void delete(Long id) {
         ebookMapper.deleteByPrimaryKey(id);
     }
 }
